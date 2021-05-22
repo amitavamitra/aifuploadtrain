@@ -5,7 +5,6 @@ const bodyParser = require('body-parser');
 const app = express();
 const https = require('https');
 const request = require('request');
-const rfcClient = require("node-rfc").Client; 
 require('dotenv').config();
 
 //  define the app on express middleware
@@ -29,6 +28,7 @@ const { TIMEOUT } = require('dns');
 const { resolve } = require('path');
 const { rejects } = require('assert');
 const { config } = require('dotenv');
+const { ppid } = require('process');
 // clientID acts as username in requests 
 const clientId = service_key['clientid'];
 //  secretkey acts as password
@@ -136,43 +136,79 @@ const art = () => {
           'description': 'A meaningful Description',
           'scenarioId': 'materialbasicdata'
         }   
-
-
         request.post({ url:artifact,
                        headers:headers,
                        json: payload}, function(error, response, artbody){
                                                
         new_artifact = artbody;
+        
          resolve(new_artifact);
   
                     });
-        
-              
-
-
             })
+            res.redirect('/');
+}
+
+
+
+const conf = () => {
+
+  return new Promise((resolve,reject) => {
+        
+    const configuration  = base_url + '/lm/configurations';
+var headers = {'AI-Resource-Group': 'default','Authorization': 'Bearer '+ token}
+const conf_payload = {
+  "name": "materialbasicdata",
+  "executableId": "materialbasicdata",
+  "scenarioId": "materialbasicdata",
+  "parameterBindings": [
+    {
+      "key": "training-epochs",
+      "value": "1"
+    }
+  ],
+  "inputArtifactBindings": [
+    {
+      "key": "training-data",
+      "artifactId": new_artifact.id
+    }
+  ]
+}
+
+request.post({url:configuration,
+  headers:headers,
+json: conf_payload},function(error, response, confbody){
+  // console.log('***********************Configuration*************************');
+  // console.log('Configuration : ', confbody);
+new_config = confbody;
+resolve(new_config);
+});
+
+  })
 }
           
 art().then(new_artifact => {
-  console.log('Promised Artifact:' ,new_artifact)
-  return create_configuration(new_artifact);
+  console.log('Artifact registered :' ,new_artifact)
+  return conf();
 }).then(new_config => {
-  console.log('Promised Config:' ,new_config)
-  return trigger_execution(new_config);
+  console.log('Configuration created :' ,new_config)
+  return trigger_execution();
  }).then(new_exec => {
-  console.log('Promised Config:' ,new_exec)
+  console.log('Execution triggered :' ,new_exec)
+ }).catch(err => {
+   console.log(err);
  })
 
     res.redirect('/');
 })
-
-
-function create_configuration(new_artifact){
+function create_configuration(){
     const configuration  = base_url + '/lm/configurations';
     var headers = {'AI-Resource-Group': 'default','Authorization': 'Bearer '+ token}
-    console.log('*********Artifact Passed for Config********************');
-    console.log('Artifact : ', new_artifact);
-    console.log('*********Artifact Passed for Config********************');
+    // console.log('*********Artifact Passed for Config********************');
+    // console.log('Artifact : ', new_artifact);
+    var id = JSON.stringify(new_artifact.id);
+    // console.log(id);
+    // console.log('*********Artifact Passed for Config********************');
     var conf_payload = {
       "name": "materialbasicdata",
       "executableId": "materialbasicdata",
@@ -194,29 +230,47 @@ function create_configuration(new_artifact){
     request.post({url:configuration,
                     headers:headers,
                 json: conf_payload},function(error, response, confbody){
-                    console.log('***********************Configuration*************************');
-                    console.log('Configuration : ', confbody);
+                    // console.log('***********************Configuration*************************');
+                    // console.log('Configuration : ', confbody);
     new_config = confbody;
     resolve(new_config)
     });
     
 }
 
-function trigger_execution(new_config) {
+const  trigger_execution = () => {
+  // console.log(new_config.id);
+  return new Promise((resolve,reject) => {
+    const execUrl  = base_url + '/lm/configurations/' + new_config.id + '/executions' ;
+    var headers = {'AI-Resource-Group': 'default','Authorization': 'Bearer '+ token}
+    request.post({url: execUrl, headers: headers},function(error,response,body){
+      // console.log('***********************Execution*************************');
+      // console.log('Execution : ', body);
+      new_exec = body;
+      resolve(new_exec);
+      })
+
+  })
+}
  
-var conf_id = new_config.id;
+app.post('/search' , function(req,res){
 
-const execUrl  = base_url + '/lm/configurations/' + conf_id + '/executions' ;
-
-
-request.post({url: execUrl, headers: headers},function(error,response,body){
-console.log('***********************Execution*************************');
-console.log('Execution : ', body);
-new_exec = body;
-    resolve(new_exec)
+  var exec_id = req.body.exec_id;
+  check_status();
 })
 
+ function check_status(exec_id){
+
+  const execUrl  = base_url + '/lm/exections/' +  exec_id;
+  console.log(base_url)
+  var headers = {'AI-Resource-Group': 'default','Authorization': 'Bearer '+ token}
+  request.get({url:execUrl,headers:headers},function(error,response,execstatus){
+  console.log(execstatus);
+  
+  })
+
 }
+ 
 
 app.listen(3003,function(){
     console.log('Aws Upload and AI Core Trigger Execution App running at port - 3003')

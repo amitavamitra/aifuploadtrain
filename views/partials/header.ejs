@@ -17,14 +17,12 @@
            <!-- 6 -->
            <li id="home"><a href="/login">Login</a></li>
            <!-- Check Deployment is running -->
-         <form action="/serve" method="post"   class="form-inline my-2 my-lg-0">
+         <form action="/search" method="post"   class="form-inline my-2 my-lg-0">
            <!-- <input   name="deploymentID"   class="form-control mr-sm-2" type="search" value="Product Management-d5516731e5e84d92" aria-label="Search"> -->
-           <select name="deploymentID" id="deploymentID">
-             <option value="d5516731e5e84d92">Product Master- d5516731e5e84d92</option>
-             <option value="d684ab99b148a2ef">Product Master- d684ab99b148a2ef</option>
-             
-           </select>
-           <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+          <label for="exec_id"></label>
+           <input type="search"  name="exec_id">
+          
+               <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
          </form>
             </ul>
     </div>
