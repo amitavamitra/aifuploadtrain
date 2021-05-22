@@ -186,7 +186,10 @@ resolve(new_config);
 
   })
 }
-          
+   
+
+//  Life is chain of promise and we keep it till the end.
+//  For any rejection we catch it and deal with it..
 art().then(new_artifact => {
   console.log('Artifact registered :' ,new_artifact)
   return conf();
@@ -266,7 +269,7 @@ app.post('/search' , function(req,res){
   var headers = {'AI-Resource-Group': 'default','Authorization': 'Bearer '+ token}
   request.get({url:execUrl,headers:headers},function(error,response,execstatus){
   console.log(execstatus);
-  
+
   })
 
 }
