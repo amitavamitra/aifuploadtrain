@@ -1,0 +1,43 @@
+<%- include('partials/header'); -%>
+<body>
+ <h1>Aws Objects</h1>
+    <form  action="/" method="post">
+        <div class="form-group">
+
+       <input type="text" class="form-control" name="bucket" id="bucket"  value="hcp-8da2bd2a-eb08-4998-baf0-3ceae565e40d">
+        </div>
+    <div class="form-group">
+    <input type="password" class="form-control" name="accesskey" id="access" value="AKIAQT4HBU7563FD4N6E">
+    </div>
+    <div class="form-group">
+    <input type="password"  class="form-control" name="secret" id="secret" value="npnV1EiUb9cj0TA5FribwyS1jOe2SNmf/cUis/ea">
+    </div>
+   
+    <div class="form-group">
+            <input type="text" class="form-control"  name="prefix" id="prefix" placeholder="amitava">
+    </div>
+
+    <div class="form-group">
+        <input type="text" class="form-control" name="scenario_id" id="scenario_id" placeholder="scenario_id">
+    </div>
+
+    <div class="form-group">
+        <input type="text" class="form-control" name="name" id="name" placeholder="name">
+    </div>
+
+    <div class="form-group">
+        <input type="text" class="form-control" name="executableId" id="executableId" placeholder="executableId">
+    </div>
+
+    <div class="form-group">
+        <input type="text" class="form-control" name="description" id="description" placeholder="A meaningful description">
+    </div>
+
+    <div class="form-group">
+        <button class="btn btn-primary" type="submit">Submit</button>      
+    </form>
+
+    <label  for="artifact">Artifact Registered</label>
+    <!-- <textarea name="artifact" id="artifact" cols="30" rows="10"><%=new_artifact.id%></textarea> -->
+</body>
+</html>

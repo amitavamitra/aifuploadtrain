@@ -1,0 +1,15 @@
+{
+  "name": "awsreadgetlistobjects",
+  "version": "1.0.0",
+  "main": "app.js",
+  "dependencies": {
+    "express": "^4.17.1",
+    "react-native": "0.59.1"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Amitava Mitra",
+  "license": "ISC",
+  "description": "Load File and Trigger Execution Pipeline in Argo from NodeJs"
+}
