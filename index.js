@@ -58,7 +58,8 @@ app.get('/login', function(req,res){
   res.render('login');
 })
 app.get('/', function(req,res){
-  res.render('home',{alive:alive , new_artifact:new_artifact, entity:entity,value:value , text:text});
+  // res.render('home',{alive:alive , new_artifact:new_artifact, entity:entity,value:value , text:text});
+  res.render('yaml')
 })
 entity =[];
 value = [];
@@ -97,17 +98,17 @@ app.post('/', function(req,res){
     var headers = {'AI-Resource-Group': 'default','Authorization': 'Bearer '+ token}
     // console.log(headers);
            const payload = { 
-            'name': 'materialbasicdata',
+            'name': req.body.name,
             'kind': 'dataset',
             'url': 'ai://default/spacy/',
             // 'url': 'ai://default/'+ 'spacy/',
-            'description': 'A meaningful Description',
-            'scenarioId': 'materialbasicdata'
+            'description': req.body.description,
+            'scenarioId':  req.body.scenario_id
           }   
 var conf_payload = {
-            "name": "materialbasicdata",
-            "executableId": "materialbasicdata",
-            "scenarioId": "materialbasicdata",
+            "name": req.body.name,
+            "executableId": req.body.executableId,
+            "scenarioId": req.body.scenario_id,
             "parameterBindings": [
               {
                 "key": "training-epochs",
@@ -129,12 +130,12 @@ const art = () => {
               const artifact  = base_url + '/lm/artifacts';
         var headers = {'AI-Resource-Group': 'default','Authorization': 'Bearer '+ token}
         const payload = { 
-          'name': 'materialbasicdata',
+          'name': req.body.name,
           'kind': 'dataset',
           'url': 'ai://default/spacy/',
           // 'url': 'ai://default/'+ 'spacy/',
-          'description': 'A meaningful Description',
-          'scenarioId': 'materialbasicdata'
+          'description': req.body.description,
+          'scenarioId': req.body.scenario_id
         }   
         request.post({ url:artifact,
                        headers:headers,
@@ -158,9 +159,9 @@ const conf = () => {
     const configuration  = base_url + '/lm/configurations';
 var headers = {'AI-Resource-Group': 'default','Authorization': 'Bearer '+ token}
 const conf_payload = {
-  "name": "materialbasicdata",
-  "executableId": "materialbasicdata",
-  "scenarioId": "materialbasicdata",
+  "name": req.body.name,
+  "executableId": req.body.executableId,
+  "scenarioId": req.body.scenario_id,
   "parameterBindings": [
     {
       "key": "training-epochs",
