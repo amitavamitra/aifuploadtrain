@@ -275,7 +275,8 @@ app.post('/search' , function(req,res){
 
 }
  
+const PORT = process.env.PORT || 3003;
 
-app.listen(3003,function(){
+app.listen(PORT,function(){
     console.log('Aws Upload and AI Core Trigger Execution App running at port - 3003')
 })
