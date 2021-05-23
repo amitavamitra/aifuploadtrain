@@ -16,5 +16,8 @@
   },
   "author": "Amitava Mitra",
   "license": "ISC",
+  "engines": {
+    "node": "12.19.0"
+  },
   "description": "Load File and Trigger Execution Pipeline in Argo from NodeJs"
 }
