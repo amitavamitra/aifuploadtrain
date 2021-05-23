@@ -53,13 +53,21 @@ var artifactID = "";
 var conf_id = "";
 var new_artifact = {};
 var new_config = {};
+var new_exec = {};
 
 app.get('/login', function(req,res){
   res.render('login');
 })
 app.get('/', function(req,res){
-  // res.render('home',{alive:alive , new_artifact:new_artifact, entity:entity,value:value , text:text});
-  res.render('home')
+  res.render('home',
+  {alive:alive ,
+     new_artifact:new_artifact,
+     new_exec:new_exec,
+     new_config:new_config,
+      entity:entity,
+      value:value , 
+      text:text});
+  // res.render('home')
 })
 entity =[];
 value = [];
