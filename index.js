@@ -59,7 +59,7 @@ app.get('/login', function(req,res){
 })
 app.get('/', function(req,res){
   // res.render('home',{alive:alive , new_artifact:new_artifact, entity:entity,value:value , text:text});
-  res.render('yaml')
+  res.render('home')
 })
 entity =[];
 value = [];
