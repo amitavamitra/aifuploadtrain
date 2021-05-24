@@ -31,12 +31,55 @@ app.post('/', function(req,res){
                 'scenarios.ai.sap.com/id': req.body.scenarios_id
             },
         },
-        spec:{
-            'imagePullSecrets':[{
-            'name':req.body.docker_secret
-            }],
-            'entrypoint':req.body.entrypoint
-        }
+            spec:{
+                'imagePullSecrets':[{
+                'name':req.body.docker_secret
+                }],
+                'entrypoint':req.body.entrypoint,
+                'volumeClaimTemplates': [{
+                    'metadata': {
+                        'name': req.body.volclaimtempName
+                    },
+                    'spec':{
+                        'accessModes':req.body.accessModes,
+                        'resources':{
+                            'requests':{
+                                'storage': req.body.storage
+                            }
+                        }
+                    }
+                }],
+                'arguments':{
+                    'parameters': [{
+                        'name': req.body.param_name1,
+                        'value': req.body.param_val1
+                    }]
+                    },
+                'templates':[
+                    {
+                    'name':req.body.templates_name,
+                    'steps':[
+                        [
+                    {
+                    'name': req.body.steps_name1,
+                    'template':req.body.steps_temp1
+                    },
+                    {
+                        'name': req.body.steps_name2,
+                        'template':req.body.steps_temp2
+                    },
+                    {
+                        'name': req.body.steps_name3,
+                        'template':req.body.steps_temp3
+                    }
+                        ]
+                ]
+                    
+                }
+            ],
+                                      
+                
+            }
             
         }    
 

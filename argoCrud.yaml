@@ -1,22 +1,22 @@
 apiVersion: argoproj.io/v1alpha1
 kind: WorkflowTemplate
 metadata:
-  name: process2903
+  name: crud
   generateName: argo-mnist-template-
   annotations:
-    scenarios.ai.sap.com/description: process2903
-    scenarios.ai.sap.com/name: process2903
-    executables.ai.sap.com/name: process2903
+    scenarios.ai.sap.com/description: crud
+    scenarios.ai.sap.com/name: crud
+    executables.ai.sap.com/name: crud
     executables.ai.sap.com/description: "Create crud with mongo"
     artifacts.ai.sap.com/training-data.kind: "dataset"
     artifacts.ai.sap.com/model.kind: "model"
   labels:
     ai.sap.com/version: 0.1.0
-    scenarios.ai.sap.com/id: process2903
+    scenarios.ai.sap.com/id: crud
 spec:
   imagePullSecrets:
   - name: amit-docker-registry-secret
-  entrypoint: process2903
+  entrypoint: crud
   
   volumeClaimTemplates:
   - metadata:
@@ -27,24 +27,20 @@ spec:
         requests:
           storage: 1Gi
 
-
   arguments:
     parameters:
     - name: training-epochs
       value: 30
 
   templates:
-  - name: process2903
+  - name: crud
     steps:
-    
     - - name: material-inputs
         template: material-inputs
-    - - name: bom
-        template: bom
-      - name: infrec
-        template: infrec
-      - name: base-price
-        template: base-price
+      - name: supplier-inputs
+        template: supplier-inputs
+    - - name: purchase-orders
+        template: purchase-orders
 
   - name: material-inputs
     metadata:
@@ -53,15 +49,15 @@ spec:
         traffic.sidecar.istio.io/includeOutboundIPRanges: 172.20.0.0/16,100.64.0.0/10,100.100.0.0/16,169.254.169.254/32,100.64.0.0/13,100.96.0.0/11,10.250.0.0/16,100.96.0.0/11,10.250.0.0/16,100.64.0.0/13
         
     container:
-      image: "mlf.docker.repositories.sapcdn.io/processcrud:latest"
+      image: "mlf.docker.repositories.sapcdn.io/crud:latest"
       
       
       command: [sh, -c]
       args:
       - >
-        
+        mkdir -p /mnt/model;
         mkdir -p /mnt/tmp;
-        node /product.js ;
+        node /app.js ;
        
       env:
       - name: DATA_FOLDER
@@ -85,62 +81,21 @@ spec:
         path: /mnt/tmp
         globalName: product
         archive:
-          none: {}  
-          
-  - name: base-price
-    metadata:
-      annotations:
-                
-        traffic.sidecar.istio.io/includeOutboundIPRanges: 172.20.0.0/16,100.64.0.0/10,100.100.0.0/16,169.254.169.254/32,100.64.0.0/13,100.96.0.0/11,10.250.0.0/16,100.96.0.0/11,10.250.0.0/16,100.64.0.0/13
-        
-    container:
-      image: "mlf.docker.repositories.sapcdn.io/processcrud:latest"
-      
-      
-      command: [sh, -c]
-      args:
-      - >
-        
-        mkdir -p /mnt/tmp;
-        node /price.js ;
-       
-      env:
-      - name: DATA_FOLDER
-        value: /training/input_data
-      - name: OUT_FOLDER
-        value: /mnt/tmp
-      volumeMounts:
-      - name: workdir
-        mountPath: /mnt/tmp  
-    
-    inputs:
-      artifacts:
-      - name: training-data
-        path: /training/input_data
-        archive:
-          none: {}
-         
-    outputs:
-      artifacts:
-      - name: price
-        path: /mnt/tmp
-        globalName: price
-        archive:
           none: {}   
-              
-  - name: bom
+        
+  - name: supplier-inputs 
     metadata:
       annotations:
                 
         traffic.sidecar.istio.io/includeOutboundIPRanges: 172.20.0.0/16,100.64.0.0/10,100.100.0.0/16,169.254.169.254/32,100.64.0.0/13,100.96.0.0/11,10.250.0.0/16,100.96.0.0/11,10.250.0.0/16,100.64.0.0/13
         
     container:
-      image: "mlf.docker.repositories.sapcdn.io/processcrud:latest"
+      image: "mlf.docker.repositories.sapcdn.io/crud:latest"
       
       command: [sh, -c]
       args:
       - >
-        node /bom.js;
+        node /supp.js;
       
       
       env:
@@ -151,35 +106,37 @@ spec:
       volumeMounts:
       - name: workdir
         mountPath: /mnt/tmp
-        
+    
     inputs:
       artifacts:
-      - name: product
+      - name: training-data
         path: /training/input_data
         archive:
-          none: {} 
+          none: {}
+    
+    
       
     outputs:
       artifacts:
-      - name: bom
+      - name: supplier
         path: /mnt/tmp
-        globalName: bom
+        globalName: supplier
         archive:
           none: {}  
   
-  - name: infrec
+  - name: purchase-orders
     metadata:
       annotations:
                 
         traffic.sidecar.istio.io/includeOutboundIPRanges: 172.20.0.0/16,100.64.0.0/10,100.100.0.0/16,169.254.169.254/32,100.64.0.0/13,100.96.0.0/11,10.250.0.0/16,100.96.0.0/11,10.250.0.0/16,100.64.0.0/13
         
     container:
-      image: "mlf.docker.repositories.sapcdn.io/processcrud:latest"
+      image: "mlf.docker.repositories.sapcdn.io/crud:latest"
       
       command: [sh, -c]
       args:
       - >
-        node /infrec.js;
+        node /order.js;
            
       
       env:

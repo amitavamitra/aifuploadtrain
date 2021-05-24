@@ -51,3 +51,25 @@
   <h2 class="results__heading">Form Data</h2>
   <pre class="results__display-wrapper"><code class="results__display"></code></pre>
 </div>
+
+==============
+
+
+ 'volumeMounts':[{
+                    'name':'workdir',
+                    'mountPath': '/mnt/tmp'
+                    }],
+
+ 'inputs':[{
+                    'artifacts':[{
+                    'name':'training-data',
+                    'path': '/training/input_data',
+                    'archive':
+                    {'none':'{}'}
+                                       
+                    }]
+                    }],
+
+     'outputs':'23' 
+
+

@@ -1,6 +1,6 @@
 <!-- create the yaml file from inputs -->
 <%- include('partials/header'); -%>
-<h1>Create argo Workflow Template</h1>
+<h1>Create argo Workflow Template- v 0.0.1</h1>
 <body>
     <!-- <form action="/create_argoWT" method="post"> -->
         <form class="content__form contact-form"  action="/" method="POST">
@@ -90,16 +90,128 @@
             </div>
           </div>
           <div class="form-group row">
-            <label for="entrypoint:" class="col-sm-4 col-form-label">entrypoint:</label>
+            <label for="entrypoint" class="col-sm-4 col-form-label">entrypoint:</label>
             <div class="col-sm-8">
               <input type="text" name="entrypoint" class="form-control" id="entrypoint" value='crud'>
             </div>
           </div>
+          <label for="">volumeClaimTemplates:</label>
+          <div class="form-group row">
+            <label class="col-sm-8 col-form-label">- metadata:</label>
+          </div>
+          <div class="form-group row">
+              <label for="volclaimtempName" class="col-sm-4 col-form-label">name:</label>
+              <div class="col-sm-8">
+                <input type="text" name="volclaimtempName" class="form-control 
+                col-sm-8" id="volclaimtempName" value='workdir'>
+              </div>
 
-          <div>
+
+              <div class="form-group row">
+                <label class="col-sm-8 col-form-label">spec:</label>
+              </div>
+              <div class="form-group row">
+                  <label for="accessModes" class="col-sm-4 col-form-label">accessModes:</label>
+                  <div class="col-sm-8">
+                    <input type="text" name="accessModes" class="form-control 
+                    col-sm-8" id="accessModes" value='[ "ReadWriteOnce" ]'>
+                  </div>   
+                  <div class="form-group row">
+                    <label class="col-sm-8 col-form-label">resources:</label>
+                  </div>
+                  <div class="form-group row">
+                    <label class="col-sm-8 col-form-label">requests:</label>
+                  </div>
+                
+                  <div class="form-group row">
+                    <label for="storage" class="col-sm-4 col-form-label">storage:</label>
+                    <div class="col-sm-8">
+                      <input type="text" name="storage" class="form-control 
+                      col-sm-8" id="storage" value='1Gi'>
+                    </div>   
+                    <br><br>
+                    <hr>
+                    <div class="form-group row">
+                      <label class="col-sm-8 col-form-label">arguments:</label>
+                    </div>
+                    <div class="form-group row">
+                      <label class="col-sm-8 col-form-label">parameters:</label>
+                    </div>
+                  
+                    <div class="form-group row">
+                      <label for="param_name1" class="col-sm-4 col-form-label">- name:</label>
+                      <div class="col-sm-8">
+                        <input type="text" name="param_name1" class="form-control" id="param_name1" value='training-epochs'>
+                      </div>
+                    </div>
+                    <div class="form-group row">
+                      <label for="param_val1" class="col-sm-4 col-form-label">value:</label>
+                      <div class="col-sm-8">
+                        <input type="text" name="param_val1" class="form-control" id="param_val1" value= 30>
+                      </div>
+                    </div>
+                  
+                  <hr>
+
+                    <div class="form-group row">
+                      <label class="col-sm-8 col-form-label">templates:</label>
+                    </div>
+                    
+                  
+                    <div class="form-group row">
+                      <label for="templates_name" class="col-sm-4 col-form-label">- name:</label>
+                      <div class="col-sm-8">
+                        <input type="text" name="templates_name" class="form-control" id="templates_namev" value='crud'>
+                      </div>
+                    </div>
+
+                    <div class="form-group row">
+                      <label class="col-sm-8 col-form-label">steps:</label>
+                    </div>
+
+                    <div class="form-group row">
+                      <label for="steps_name1" class="col-sm-4 col-form-label">-- name:</label>
+                      <div class="col-sm-8">
+                        <input type="text" name="steps_name1" class="form-control" id="steps_name1" value= 'material-inputs'>
+                      </div>
+                    </div>
+                    <div class="form-group row">
+                      <label for="steps_temp1" class="col-sm-4 col-form-label">template:</label>
+                      <div class="col-sm-8">
+                        <input type="text" name="steps_temp1" class="form-control" id="steps_temp1" value= 'material-inputs'>
+                      </div>
+                    </div>
+
+                    <div class="form-group row">
+                      <label for="steps_name2" class="col-sm-4 col-form-label">- name:</label>
+                      <div class="col-sm-8">
+                        <input type="text" name="steps_name2" class="form-control" id="steps_name2" value= 'supplier-inputs'>
+                      </div>
+                    </div>
+                    <div class="form-group row">
+                      <label for="steps_temp2" class="col-sm-4 col-form-label">template:</label>
+                      <div class="col-sm-8">
+                        <input type="text" name="steps_temp2" class="form-control" id="steps_temp2" value= 'supplier-inputs'>
+                      </div>
+                    </div>  
+
+                    <div class="form-group row">
+                      <label for="steps_name3" class="col-sm-4 col-form-label">-- name:</label>
+                      <div class="col-sm-8">
+                        <input type="text" name="steps_name3" class="form-control" id="steps_name3" value= 'purchase-orders'>
+                      </div>
+                    </div>
+                    <div class="form-group row">
+                      <label for="steps_temp3" class="col-sm-4 col-form-label">template:</label>
+                      <div class="col-sm-8">
+                        <input type="text" name="steps_temp3" class="form-control" id="steps_temp3" value= 'purchase-orders'>
+                      </div>
+                    </div>
+                   
+          <!-- <div>
             <input name:"query" type="hidden" id="demo" value="query:{}"/>
             </div>
-            
+             -->
             <button class="contact-form__button" type="submit">Send It!</button>
     </div>
 
