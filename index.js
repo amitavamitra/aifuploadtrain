@@ -21,6 +21,8 @@ app.set('view engine' , 'ejs');
 // and part of .gitignore
 // credential for ai core instance
 const service_key = require('./enablement-sk.json');
+// credential for s3 object store
+const s3_key = require('./objectStore.json');
 // const { request } = require('node:http');
 const { func } = require('assert-plus');
 const { head } = require('request');
@@ -37,6 +39,18 @@ const secretkey = service_key['clientsecret'];
 const base_url = service_key['serviceurls']['ML_API_URL'] + '/v2' ;
 // url to be used to fetch the auth token
 var url = service_key['url'] + '/oauth/token?grant_type=client_credentials' ;
+
+// s3-bucket name
+const s3_bucket = s3_key['bucket'];
+
+// s3 accesskey
+const s3_accesskey = s3_key['access_key_id'];
+
+//s3 secretkey
+const s3_secretkey = s3_key['secret_access_key'];
+
+
+
 // global definition of token variable
 var token = "";
 //  global definition of serving url for inference
@@ -59,14 +73,19 @@ app.get('/login', function(req,res){
   res.render('login');
 })
 app.get('/', function(req,res){
-  res.render('home',
-  {alive:alive ,
-     new_artifact:new_artifact,
-     new_exec:new_exec,
-     new_config:new_config,
-      entity:entity,
-      value:value , 
-      text:text});
+
+    res.render('input');
+  // res.render('home',
+  // {alive:alive ,
+  //   bucket: s3_bucket,
+  //   access_key_id:s3_accesskey,
+  //   secret_access_key:s3_secretkey,
+  //    new_artifact:new_artifact,
+  //    new_exec:new_exec,
+  //    new_config:new_config,
+  //     entity:entity,
+  //     value:value , 
+  //     text:text});
   // res.render('home')
 })
 entity =[];
@@ -102,7 +121,7 @@ app.post('/login' , function(req,res){
 // https://medium.com/technofunnel/javascript-function-chaining-8b2fbef76f7f
 // https://javascript.info/promise-chaining
 app.post('/', function(req,res){
-
+console.log(req.body.scenarioId)
     var headers = {'AI-Resource-Group': 'default','Authorization': 'Bearer '+ token}
     // console.log(headers);
            const payload = { 

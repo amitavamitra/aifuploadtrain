@@ -1,13 +1,19 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <%- include('partials/header'); -%>
+  <title>Aif Made Easy</title>
+</head>
+
 <body>
     <section class="content">
-        <h1 class="content__heading">Send Me a Message</h1>
-        <p class="content__lede">Use this handy contact form to get in touch with me.</p>
-        
+        <h1 class="content__heading">Create Argo Template</h1>
+               
         <form class="content__form contact-form"  action="" method="get">
           <div class="testing">
-            <p>Does this do anything?</p>
+          
           </div>
-          <div class="contact-form__input-group">
+          <div class="contact-form__input-group  form-row">
             <input class="contact-form__input contact-form__input--radio" id="salutation-mr" name="salutation" type="radio" value="Mr."/>
             <label class="contact-form__label contact-form__label--radio" for="salutation-mr">Mr.</label>
             <input class="contact-form__input contact-form__input--radio" id="salutation-mrs" name="salutation" type="radio" value="Mrs."/>
@@ -15,30 +21,52 @@
             <input class="contact-form__input contact-form__input--radio" id="salutation-ms" name="salutation" type="radio" value="Ms."/>
             <label class="contact-form__label contact-form__label--radio" for="salutation-ms">Ms.</label>
           </div>
-          <div class="contact-form__input-group">
-            <label class="contact-form__label" for="name">Full Name</label>
-            <input class="contact-form__input contact-form__input--text" id="name" name="name" type="text"/>
+          <div class="contact-form__input-group  form-row">
+              <div class="col">
+              <input type="text"  name="apiVersion" id="apiVersion" 
+              class="form-control contact-form__input contact-form__input--text" 
+              value="argoproj.io/v1alpha1">
+              </div>
+            
+              <div class="col">
+                <input type="text"  name="kind" id="kind" 
+                class="form-control contact-form__input contact-form__input--text" 
+                value="WorkflowTemplate">
+              </div>  
+
+              <label  class="contact-form__label" >metadata:</label>
+              <div class="col">
+                <input type="text"  name="metadata:" id="metadata:" 
+                class="form-control contact-form__input contact-form__input--text" 
+                >
+              </div>  
+
+              <div class="contact-form__input-group">
+                <p class="contact-form__label--checkbox-group">12metadata:</p>
+                <input class="contact-form__input contact-form__input--checkbox" id="snacks-pizza" name="metadata" type="checkbox" value="scenario:/id"/>
+                <input class="contact-form__input contact-form__input--checkbox" id="snacks-pizza" name="metadata" type="checkbox" value="scenario:/desc"/>
+                
+                <label class="contact-form__label contact-form__label--checkbox" for="snacks-pizza">scenario:/id</label>
+                <input class="contact-form__input contact-form__input--checkbox" id="snacks-cake" name="snacks" type="checkbox" value="cake"/>
+                
+              </div>
+              
+
           </div>
-          <div class="contact-form__input-group">
-            <label class="contact-form__label" for="email">Email Address</label>
-            <input class="contact-form__input contact-form__input--email" id="email" name="email" type="email"/>
-          </div>
-          <div class="contact-form__input-group">
-            <label class="contact-form__label" for="subject">How can I help you?</label>
-            <select class="contact-form__input contact-form__input--select" id="subject" name="subject">
-              <option>I have a problem.</option>
-              <option>I have a general question.</option>
-            </select>
-          </div>
-          <div class="contact-form__input-group">
-            <label class="contact-form__label" for="message">Enter a Message</label>
-            <textarea class="contact-form__input contact-form__input--textarea" id="message" name="message" rows="6" cols="65"></textarea>
-          </div>
+    
           <div class="contact-form__input-group">
             <p class="contact-form__label--checkbox-group">Please send me:</p>
-            <input class="contact-form__input contact-form__input--checkbox" id="snacks-pizza" name="snacks" type="checkbox" value="pizza"/>
-            <label class="contact-form__label contact-form__label--checkbox" for="snacks-pizza">Pizza</label>
-            <input class="contact-form__input contact-form__input--checkbox" id="snacks-cake" name="snacks" type="checkbox" value="cake"/>
+            <input class="contact-form__input contact-form__input--checkbox" id="snacks-pizza" name="metadata: " type="checkbox" value="scenarios.ai.sap.com/description:"/>
+            <div class="col"> 
+            <label class="contact-form__label contact-form__label--checkbox"  checked="true"   for="name">scenarios.ai.sap.com/description:</label>
+                 <input type="text"  name="name" id="name" 
+              class="form-control contact-form__input contact-form__input--text" 
+              value="crud2305">
+              </div>
+
+
+
+
             <label class="contact-form__label contact-form__label--checkbox" for="snacks-cake">Cake</label>
           </div>
           <input name="authentication" type="hidden" value="Token 1b3a9374-1a8e-434e-90ab-21aa7b9b80e7"/>
@@ -225,3 +253,5 @@ if(window.attachEvent) {
 </script>
 
 </body>
+
+</html>
